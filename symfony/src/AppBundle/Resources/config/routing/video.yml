@@ -17,3 +17,8 @@ video_upload_video:
     path:     /upload-video/{videoId}
     defaults: { _controller: AppBundle:Video:upload, videoId:null }
     methods: POST
+
+video_list:
+    path:     /list
+    defaults: { _controller: AppBundle:Video:videos }
+    methods: GET
