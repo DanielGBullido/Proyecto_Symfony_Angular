@@ -269,7 +269,25 @@ class VideoController extends Controller
             "page_actual" => $page,
             "items_per_page" => $itemsPerPage,
             "total_pages" => ceil($totalItemsCount / $itemsPerPage),
-            "data"=> $pagination
+            "data" => $pagination
+        );
+
+        return $helpers->json($data);
+    }
+
+    public function lastsVideosAction(Request $request)
+    {
+        $helpers = $this->get("app.helpers");
+
+        $em = $this->getDoctrine()->getManager();
+
+        $dql = "SELECT v FROM BackendBundle:Video v ORDER BY v.createAt DESC";
+        $query = $em->createQuery($dql)->setMaxResults(5);
+        $videos = $query->getResult();
+
+        $data = array(
+            "status" => "success",
+            "data" => $videos
         );
 
         return $helpers->json($data);
